@@ -1,30 +1,21 @@
 class Calculator
-	attr_accessor :number_string
+	attr_accessor :number_string, :negative_numbers
 
 	def initialize(number_string)
 		@number_string = number_string
+		@negative_numbers = []
 	end
 		
 	def add
-		return 0 if number_string.empty?
-
 		sum = 0
-		negative_numbers = []
-
 		numbers.map do |num|
 			number = num.to_i
-			if number < 0
-				negative_numbers << number
-			else
-				sum = sum + number
-			end
+			number < 0 ? (negative_numbers << number) : (sum+= number)
 		end
-
-		negative_numbers.empty? ? sum: "Negative numbers not allowed #{negative_numbers}" 
+		negative_numbers.empty? ? sum : "Negative numbers not allowed #{negative_numbers}" 
 	end
 
 	private
-
 		def numbers
 			@number_string.gsub("\n", delimeter).split(delimeter)
 		end
@@ -32,5 +23,4 @@ class Calculator
 		def delimeter
 			@number_string[0,2] == "//" ? @number_string[2]: ","
 		end
-
 end
